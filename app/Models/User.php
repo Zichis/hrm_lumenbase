@@ -19,7 +19,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'email',
     ];
 
     /**
@@ -30,4 +30,19 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
+
+    // Relationships
+    public function personal()
+    {
+        return $this->hasOne('App\Models\Personal');
+    }
+
+    public function name()
+    {
+        if (is_null($this->personal)) {
+            return null;
+        }
+        
+        return $this->personal->first_name . ' ' . $this->personal->last_name;
+    }
 }
