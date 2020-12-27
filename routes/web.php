@@ -21,4 +21,8 @@ $router->get('users', [
     'middleware' => 'auth',
     'uses' => 'UserController@index'
 ]);
+$router->get('profile', [
+    'middleware' => 'auth',
+    'uses' => 'ProfileController@index'
+]);
 $router->post('login', 'LoginController@login');
