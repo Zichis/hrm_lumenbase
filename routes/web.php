@@ -21,6 +21,10 @@ $router->get('users', [
     'middleware' => 'auth',
     'uses' => 'UserController@index'
 ]);
+$router->post('users', [
+    'middleware' => 'auth',
+    'uses' => 'UserController@create'
+]);
 $router->get('profile', [
     'middleware' => 'auth',
     'uses' => 'ProfileController@index'
