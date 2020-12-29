@@ -21,6 +21,10 @@ $router->get('users', [
     'middleware' => 'auth',
     'uses' => 'UserController@index'
 ]);
+$router->get('users/{id}', [
+    'middleware' => 'auth',
+    'uses' => 'UserController@show'
+]);
 $router->post('users', [
     'middleware' => 'auth',
     'uses' => 'UserController@create'
