@@ -64,4 +64,19 @@ class UserController extends Controller
 
         return response()->json($user);
     }
+
+    public function update(Request $request, $id)
+    {
+        $filteredRequest = array_filter($request->all());
+
+        $user = Personal::where('user_id', $id)->update($filteredRequest);
+
+        $code = 200;
+        $output = [
+            'code' => $code,
+            'message' => 'User updated!',
+        ];
+
+        return response()->json($output, $code);
+    }
 }
