@@ -25,6 +25,10 @@ $router->get('users/{id}', [
     'middleware' => 'auth',
     'uses' => 'UserController@show'
 ]);
+$router->put('users/{id}', [
+    'middleware' => 'auth',
+    'uses' => 'UserController@update'
+]);
 $router->post('users', [
     'middleware' => 'auth',
     'uses' => 'UserController@create'
