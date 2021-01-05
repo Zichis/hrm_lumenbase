@@ -25,7 +25,7 @@ class LoginController extends Controller
             $code = 401;
             $output = [
                 'code' => $code,
-                'message' => 'User is not authorized!'
+                'message' => 'Wrong login credentials!'
             ];
 
             return response()->json($output, $code);
