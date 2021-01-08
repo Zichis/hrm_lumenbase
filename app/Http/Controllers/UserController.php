@@ -19,6 +19,7 @@ class UserController extends Controller
         $users = DB::table('users')
                     ->join('personals', 'users.id', '=', 'personals.user_id')
                     ->select('users.id', 'users.email', 'personals.first_name', 'personals.last_name')
+                    ->where('users.deleted_at', null)
                     ->get();
 
         return response()->json($users);
@@ -75,6 +76,27 @@ class UserController extends Controller
         $output = [
             'code' => $code,
             'message' => 'User updated!',
+        ];
+
+        return response()->json($output, $code);
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        User::destroy($id);
+        $users = DB::table('users')
+                    ->join('personals', 'users.id', '=', 'personals.user_id')
+                    ->select('users.id', 'users.email', 'personals.first_name', 'personals.last_name')
+                    ->where('users.deleted_at', null)
+                    ->get();
+
+        $code = 200;
+        $output = [
+            'code' => $code,
+            'message' => 'User deleted!',
+            'data' => array(
+              'users' => $users
+            ),
         ];
 
         return response()->json($output, $code);
