@@ -33,6 +33,10 @@ $router->post('users', [
     'middleware' => 'auth',
     'uses' => 'UserController@create'
 ]);
+$router->delete('users/{id}', [
+    'middleware' => 'auth',
+    'uses' => 'UserController@destroy'
+]);
 $router->get('profile', [
     'middleware' => 'auth',
     'uses' => 'ProfileController@index'
