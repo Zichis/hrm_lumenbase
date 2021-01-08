@@ -18,6 +18,7 @@ class CreatePersonalTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string('first_name');
             $table->string('last_name');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
