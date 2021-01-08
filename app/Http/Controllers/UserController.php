@@ -83,7 +83,10 @@ class UserController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        User::destroy($id);
+        $user = User::find($id);
+        $personal = Personal::where('user_id', $user->id)->first()->delete();
+        $user->delete();
+        
         $users = DB::table('users')
                     ->join('personals', 'users.id', '=', 'personals.user_id')
                     ->select('users.id', 'users.email', 'personals.first_name', 'personals.last_name')
