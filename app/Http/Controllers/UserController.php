@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -86,7 +87,7 @@ class UserController extends Controller
         $user = User::find($id);
         $personal = Personal::where('user_id', $user->id)->first()->delete();
         $user->delete();
-        
+
         $users = DB::table('users')
                     ->join('personals', 'users.id', '=', 'personals.user_id')
                     ->select('users.id', 'users.email', 'personals.first_name', 'personals.last_name')
@@ -100,6 +101,19 @@ class UserController extends Controller
             'data' => array(
               'users' => $users
             ),
+        ];
+
+        return response()->json($output, $code);
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        $code = 200;
+        $output = [
+            'code' => $code,
+            'message' => 'User logged out!'
         ];
 
         return response()->json($output, $code);
