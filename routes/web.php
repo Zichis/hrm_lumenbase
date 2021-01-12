@@ -42,3 +42,4 @@ $router->get('profile', [
     'uses' => 'ProfileController@index'
 ]);
 $router->post('login', 'LoginController@login');
+$router->get('logout', 'UserController@logout');
