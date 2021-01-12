@@ -41,5 +41,9 @@ $router->get('profile', [
     'middleware' => 'auth',
     'uses' => 'ProfileController@index'
 ]);
+$router->get('current-user', [
+    'middleware' => 'auth',
+    'uses' => 'UserController@current'
+]);
 $router->post('login', 'LoginController@login');
 $router->get('logout', 'UserController@logout');
