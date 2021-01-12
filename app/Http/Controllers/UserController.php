@@ -106,6 +106,27 @@ class UserController extends Controller
         return response()->json($output, $code);
     }
 
+    public function current()
+    {
+        $user = Auth::user();
+        $user = DB::table('users')
+                    ->where('users.id', $user->id)
+                    ->join('personals', 'users.id', '=', 'personals.user_id')
+                    ->select('users.id', 'users.email', 'personals.first_name', 'personals.last_name')
+                    ->first();
+
+        $code = 200;
+        $output = [
+            'code' => $code,
+            'message' => 'Current user!',
+            'data' => array(
+              'user' => $user
+            ),
+        ];
+
+        return response()->json($output, $code);
+    }
+
     public function logout()
     {
         Auth::logout();
