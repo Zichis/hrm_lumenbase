@@ -127,6 +127,20 @@ class UserController extends Controller
         return response()->json($output, $code);
     }
 
+    public function count()
+    {
+        $code = 200;
+        $output = [
+            'code' => $code,
+            'message' => 'Number of users',
+            'data' => array(
+              'users' => User::count()
+            ),
+        ];
+
+        return response()->json($output, $code);
+    }
+
     public function logout()
     {
         Auth::logout();
