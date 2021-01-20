@@ -45,5 +45,8 @@ $router->get('current-user', [
     'middleware' => 'auth',
     'uses' => 'UserController@current'
 ]);
+$router->get('users/count', [
+    'uses' => 'UserController@count'
+]);
 $router->post('login', 'LoginController@login');
 $router->get('logout', 'UserController@logout');
