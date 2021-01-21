@@ -21,6 +21,9 @@ $router->get('users', [
     'middleware' => 'auth',
     'uses' => 'UserController@index'
 ]);
+$router->get('users/count', [
+    'uses' => 'UserController@count'
+]);
 $router->get('users/{id}', [
     'middleware' => 'auth',
     'uses' => 'UserController@show'
@@ -44,9 +47,6 @@ $router->get('profile', [
 $router->get('current-user', [
     'middleware' => 'auth',
     'uses' => 'UserController@current'
-]);
-$router->get('users/count', [
-    'uses' => 'UserController@count'
 ]);
 $router->post('login', 'LoginController@login');
 $router->get('logout', 'UserController@logout');
