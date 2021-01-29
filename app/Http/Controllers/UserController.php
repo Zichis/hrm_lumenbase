@@ -127,6 +127,45 @@ class UserController extends Controller
         return response()->json($output, $code);
     }
 
+    public function onboard(Request $request)
+    {
+        if (User::count() > 0) {
+            $code = 403;
+            $output = [
+                'code' => $code,
+                'message' => 'Admin exist!',
+            ];
+
+            return response()->json($output, $code);
+        }
+
+        $validated = $this->validate($request, [
+            'email' => 'required|email|unique:users',
+            'password' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required'
+        ]);
+
+        $user = User::create([
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+
+        $profile = Personal::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'user_id' => $user->id
+        ]);
+
+        $code = 200;
+        $output = [
+            'code' => $code,
+            'message' => 'User added!',
+        ];
+
+        return response()->json($output, $code);
+    }
+
     public function count()
     {
         $code = 200;
