@@ -48,5 +48,8 @@ $router->get('current-user', [
     'middleware' => 'auth',
     'uses' => 'UserController@current'
 ]);
+$router->post('onboard', [
+    'uses' => 'UserController@onboard'
+]);
 $router->post('login', 'LoginController@login');
 $router->get('logout', 'UserController@logout');
