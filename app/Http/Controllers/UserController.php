@@ -9,19 +9,23 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Personal;
+use App\Repository\UserRepository;
 
 class UserController extends Controller
 {
+    private $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+      $this->userRepository = $userRepository;
+    }
+
     public function index()
     {
         /*if (count(User::all()) < 1) {
             User::factory()->count(2)->create();
         }*/
-        $users = DB::table('users')
-                    ->join('personals', 'users.id', '=', 'personals.user_id')
-                    ->select('users.id', 'users.email', 'personals.first_name', 'personals.last_name')
-                    ->where('users.deleted_at', null)
-                    ->get();
+        $users = $this->userRepository->usersWithPersonal();
 
         return response()->json($users);
     }
@@ -88,11 +92,7 @@ class UserController extends Controller
         $personal = Personal::where('user_id', $user->id)->first()->delete();
         $user->delete();
 
-        $users = DB::table('users')
-                    ->join('personals', 'users.id', '=', 'personals.user_id')
-                    ->select('users.id', 'users.email', 'personals.first_name', 'personals.last_name')
-                    ->where('users.deleted_at', null)
-                    ->get();
+        $users = $this->userRepository->usersWithPersonal();
 
         $code = 200;
         $output = [
