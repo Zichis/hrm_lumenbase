@@ -62,11 +62,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        $user = DB::table('users')
-                    ->where('users.id', $user->id)
-                    ->join('personals', 'users.id', '=', 'personals.user_id')
-                    ->select('users.id', 'users.email', 'personals.first_name', 'personals.last_name')
-                    ->first();
+        $user = $this->userRepository->userWithPersonal($user->id);
 
         return response()->json($user);
     }
@@ -108,12 +104,8 @@ class UserController extends Controller
 
     public function current()
     {
-        $user = Auth::user();
-        $user = DB::table('users')
-                    ->where('users.id', $user->id)
-                    ->join('personals', 'users.id', '=', 'personals.user_id')
-                    ->select('users.id', 'users.email', 'personals.first_name', 'personals.last_name')
-                    ->first();
+        $userLogged = Auth::user();
+        $user = $this->userRepository->userWithPersonal($userLogged);
 
         $code = 200;
         $output = [
