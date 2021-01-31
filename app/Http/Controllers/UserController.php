@@ -10,14 +10,18 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Personal;
 use App\Repository\UserRepository;
+use App\Service\UserService;
 
 class UserController extends Controller
 {
     private $userRepository;
 
-    public function __construct(UserRepository $userRepository)
-    {
+    public function __construct(
+      UserRepository $userRepository,
+      UserService $userService
+    ) {
       $this->userRepository = $userRepository;
+      $this->userService = $userService;
     }
 
     public function index()
@@ -105,16 +109,22 @@ class UserController extends Controller
     public function current()
     {
         $userLogged = Auth::user();
-        $user = $this->userRepository->userWithPersonal($userLogged);
+        $user = $this->userRepository->userWithPersonal($userLogged->id);
 
         $code = 200;
-        $output = [
+        $output = $this->userService->responseMessage(
+          'Current user!',
+          array(
+            'user' => $user
+          )
+        );
+        /*$output = [
             'code' => $code,
             'message' => 'Current user!',
             'data' => array(
               'user' => $user
             ),
-        ];
+        ];*/
 
         return response()->json($output, $code);
     }
