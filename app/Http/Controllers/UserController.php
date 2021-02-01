@@ -90,6 +90,9 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $personal = Personal::where('user_id', $user->id)->first()->delete();
+        // TODO: Check if archived_email exists
+        $user->email = 'archived_' . $user->email;
+        $user->save();
         $user->delete();
 
         $users = $this->userRepository->usersWithPersonal();
