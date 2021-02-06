@@ -19,6 +19,12 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
+        $remember = filter_var($request->input('remember'), FILTER_VALIDATE_BOOLEAN);
+
+        if ($remember) {
+            Auth::factory()->setTTL(168);
+        }
+
         $input = $request->only('email', 'password');
 
         if (!$authorized = Auth::attempt($input)) {
