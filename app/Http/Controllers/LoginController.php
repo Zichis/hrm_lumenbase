@@ -20,14 +20,15 @@ class LoginController extends Controller
         ]);
 
         $remember = filter_var($request->input('remember'), FILTER_VALIDATE_BOOLEAN);
+        $ttl = 60;
 
         if ($remember) {
-            Auth::factory()->setTTL(168);
+            $ttl = 168;
         }
 
         $input = $request->only('email', 'password');
 
-        if (!$authorized = Auth::attempt($input)) {
+        if (!$authorized = auth()->setTTL($ttl)->attempt($input)) {
             $code = 401;
             $output = [
                 'code' => $code,
