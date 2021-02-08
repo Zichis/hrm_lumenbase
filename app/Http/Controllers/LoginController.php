@@ -23,7 +23,7 @@ class LoginController extends Controller
         $ttl = 60;
 
         if ($remember) {
-            $ttl = 168;
+            $ttl = 7200;
         }
 
         $input = $request->only('email', 'password');
