@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Role;
 use App\Models\Personal;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -28,6 +29,10 @@ class UserSeeder extends Seeder
             'user_id' => $user1->id
         ]);
 
+        $adminRole = Role::find(1);
+        $userRole = Role::find(2);
+        $user1->roles()->attach([$adminRole->id, $userRole->id]);
+
         // User 2
         $user2 = User::create([
             'email' => 'janedoe@gmail.com',
@@ -39,5 +44,7 @@ class UserSeeder extends Seeder
             'last_name' => 'Doe',
             'user_id' => $user2->id
         ]);
+
+        $user2->roles()->attach([$userRole->id]);
     }
 }
