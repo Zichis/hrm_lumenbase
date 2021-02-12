@@ -53,6 +53,17 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->belongsToMany(Role::class);
     }
 
+    public function rolesNames()
+    {
+        $names = [];
+        
+        foreach ($this->roles as $role) {
+            $names[] = $role->name;
+        }
+
+        return $names;
+    }
+
     // JWT
     public function getJWTIdentifier()
     {
