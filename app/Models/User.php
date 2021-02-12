@@ -48,6 +48,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->personal->first_name . ' ' . $this->personal->last_name;
     }
 
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
     // JWT
     public function getJWTIdentifier()
     {
