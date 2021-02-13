@@ -17,6 +17,8 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->get('user/roles', ['middleware' => 'auth', 'uses' => 'UserController@roles']);
+$router->get('users/count', 'UserController@count');
 $router->group(['middleware' => ['auth', 'admin']], function () use ($router) {
     $router->group(['prefix' => 'users'], function () use ($router) {
         $router->get('/', 'UserController@index');
@@ -32,7 +34,6 @@ $router->get('profile', [
     'uses' => 'ProfileController@index'
 ]);
 
-$router->get('users/count', 'UserController@count');
 $router->get('current-user', [
     'middleware' => 'auth',
     'uses' => 'UserController@current'
