@@ -17,33 +17,22 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('users', [
-    'middleware' => 'auth',
-    'uses' => 'UserController@index'
-]);
-$router->get('users/count', [
-    'uses' => 'UserController@count'
-]);
-$router->get('users/{id}', [
-    'middleware' => 'auth',
-    'uses' => 'UserController@show'
-]);
-$router->put('users/{id}', [
-    'middleware' => 'auth',
-    'uses' => 'UserController@update'
-]);
-$router->post('users', [
-    'middleware' => 'auth',
-    'uses' => 'UserController@create'
-]);
-$router->delete('users/{id}', [
-    'middleware' => 'auth',
-    'uses' => 'UserController@destroy'
-]);
+$router->group(['middleware' => ['auth', 'admin']], function () use ($router) {
+    $router->group(['prefix' => 'users'], function () use ($router) {
+        $router->get('/', 'UserController@index');
+        $router->get('{id}', 'UserController@show');
+        $router->put('{id}', 'UserController@update');
+        $router->post('/', 'UserController@create');
+        $router->delete('{id}', 'UserController@destroy');
+    });
+});
+
 $router->get('profile', [
     'middleware' => 'auth',
     'uses' => 'ProfileController@index'
 ]);
+
+$router->get('users/count', 'UserController@count');
 $router->get('current-user', [
     'middleware' => 'auth',
     'uses' => 'UserController@current'
