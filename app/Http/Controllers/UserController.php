@@ -185,6 +185,19 @@ class UserController extends Controller
         return response()->json($output, $code);
     }
 
+    public function roles()
+    {
+        $code = 200;
+        $output = [
+            'message' => 'User roles',
+            'data' => array(
+              'roles' => Auth::user()->rolesNames()
+            ),
+        ];
+
+        return response()->json($output, $code);
+    }
+
     public function logout()
     {
         Auth::logout();
