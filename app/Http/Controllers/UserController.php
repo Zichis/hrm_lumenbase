@@ -48,6 +48,8 @@ class UserController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
+        $user->roles()->attach([2]); // User role
+
         $profile = Personal::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -156,7 +158,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        $user->roles()->attach([1]); // Admin role
+        $user->roles()->attach([1, 2]); // Admin role
 
         $profile = Personal::create([
             'first_name' => $request->first_name,
