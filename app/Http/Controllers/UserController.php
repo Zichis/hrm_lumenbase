@@ -134,7 +134,7 @@ class UserController extends Controller
 
     public function onboard(Request $request)
     {
-        if (User::count() > 0) {
+        if (User::where('deleted_at', 0)->count() > 0) {
             $code = 403;
             $output = [
                 'code' => $code,
@@ -155,6 +155,8 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
+
+        $user->roles()->attach([1]); // Admin role
 
         $profile = Personal::create([
             'first_name' => $request->first_name,
