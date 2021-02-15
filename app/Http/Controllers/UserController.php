@@ -48,6 +48,12 @@ class UserController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
+        $admin = filter_var($request->input('admin'), FILTER_VALIDATE_BOOLEAN);
+
+        if ($admin) {
+            $user->roles()->attach([1]);
+        }
+
         $user->roles()->attach([2]); // User role
 
         $profile = Personal::create([
