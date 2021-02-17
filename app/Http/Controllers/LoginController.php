@@ -14,10 +14,12 @@ class LoginController extends Controller
 {
     public function login(Request $request)
     {
-        $this->validate($request, [
+        $this->validate(
+            $request, [
             'email' => 'required|email',
             'password' => 'required'
-        ]);
+            ]
+        );
 
         $remember = filter_var($request->input('remember'), FILTER_VALIDATE_BOOLEAN);
         $ttl = 60;
