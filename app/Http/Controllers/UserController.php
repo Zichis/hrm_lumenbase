@@ -17,11 +17,11 @@ class UserController extends Controller
     private $userRepository;
 
     public function __construct(
-      UserRepository $userRepository,
-      UserService $userService
+        UserRepository $userRepository,
+        UserService $userService
     ) {
-      $this->userRepository = $userRepository;
-      $this->userService = $userService;
+        $this->userRepository = $userRepository;
+        $this->userService = $userService;
     }
 
     public function index()
@@ -36,17 +36,21 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
-        $validated = $this->validate($request, [
+        $validated = $this->validate(
+            $request, [
             'email' => 'required|email|unique:users',
             'password' => 'required',
             'first_name' => 'required',
             'last_name' => 'required'
-        ]);
+            ]
+        );
 
-        $user = User::create([
+        $user = User::create(
+            [
             'email' => $request->email,
             'password' => Hash::make($request->password)
-        ]);
+            ]
+        );
 
         $admin = filter_var($request->input('admin'), FILTER_VALIDATE_BOOLEAN);
 
@@ -56,11 +60,13 @@ class UserController extends Controller
 
         $user->roles()->attach([2]); // User role
 
-        $profile = Personal::create([
+        $profile = Personal::create(
+            [
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'user_id' => $user->id
-        ]);
+            ]
+        );
 
         $code = 200;
         $output = [
@@ -124,10 +130,10 @@ class UserController extends Controller
 
         $code = 200;
         $output = $this->userService->responseMessage(
-          'Current user!',
-          array(
+            'Current user!',
+            array(
             'user' => $user
-          )
+            )
         );
         /*$output = [
             'code' => $code,
@@ -152,25 +158,31 @@ class UserController extends Controller
             return response()->json($output, $code);
         }
 
-        $validated = $this->validate($request, [
+        $validated = $this->validate(
+            $request, [
             'email' => 'required|email|unique:users',
             'password' => 'required',
             'first_name' => 'required',
             'last_name' => 'required'
-        ]);
+            ]
+        );
 
-        $user = User::create([
+        $user = User::create(
+            [
             'email' => $request->email,
             'password' => Hash::make($request->password)
-        ]);
+            ]
+        );
 
         $user->roles()->attach([1, 2]); // Admin role
 
-        $profile = Personal::create([
+        $profile = Personal::create(
+            [
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'user_id' => $user->id
-        ]);
+            ]
+        );
 
         $code = 200;
         $output = [
