@@ -48,15 +48,22 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->personal->first_name . ' ' . $this->personal->last_name;
     }
 
+    /** Relationships **/
     public function roles()
     {
         return $this->belongsToMany(Role::class);
     }
 
+    public function attendance()
+    {
+        return $this->belongsToMany(Attendance::class);
+    }
+    /** End of Relationships **/
+
     public function rolesNames()
     {
         $names = [];
-        
+
         foreach ($this->roles as $role) {
             $names[] = $role->name;
         }
