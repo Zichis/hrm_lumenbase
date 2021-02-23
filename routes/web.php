@@ -27,6 +27,8 @@ $router->group(
     }
 );
 
+$router->get('attendance', 'Admin\AttendanceController@index');
+
 $router->get(
     'profile', [
     'middleware' => 'auth',
