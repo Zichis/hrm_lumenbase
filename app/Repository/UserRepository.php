@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class UserRepository
@@ -22,5 +23,13 @@ class UserRepository
       ->join('personals', 'users.id', '=', 'personals.user_id')
       ->select('users.id', 'users.email', 'personals.first_name', 'personals.last_name')
       ->first();
+  }
+
+  public function getUsers()
+  {
+    return User::with([
+        'personal',
+        'roles'
+    ])->where('users.deleted_at', null)->get();
   }
 }
