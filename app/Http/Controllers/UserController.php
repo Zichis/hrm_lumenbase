@@ -26,10 +26,7 @@ class UserController extends Controller
 
     public function index()
     {
-        /*if (count(User::all()) < 1) {
-            User::factory()->count(2)->create();
-        }*/
-        $users = $this->userRepository->usersWithPersonal();
+        $users = $this->userRepository->getUsers();
 
         return response()->json($users);
     }
