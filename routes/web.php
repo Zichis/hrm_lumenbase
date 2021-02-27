@@ -28,6 +28,8 @@ $router->group(
 );
 
 $router->get('attendance', 'Admin\AttendanceController@index');
+$router->get('attendance/clock-in', 'AttendanceController@clockIn');
+$router->get('attendance/status', 'AttendanceController@status');
 
 $router->get(
     'profile', [
