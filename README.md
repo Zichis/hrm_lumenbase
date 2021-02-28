@@ -1,4 +1,3 @@
 # LumenBase
 
-This project is built using Lumen.
-
+This project is an API for a HR system built using Laravel Lumen Framework.
