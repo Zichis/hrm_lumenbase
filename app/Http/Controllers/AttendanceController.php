@@ -19,7 +19,7 @@ class AttendanceController extends Controller
 
     public function index()
     {
-        //
+        return response()->json(['msg' => 'Success', 'attendances' => Auth::user()->attendance]);
     }
 
     public function clockIn()
@@ -31,10 +31,6 @@ class AttendanceController extends Controller
         if ($attendance->count() > 0) {
             return response()->json(['msg' => 'User clocked in already!'], 403);
         }
-
-        if ($today->format('H') < 8 || $today->format('H') > 16) {
-            return response()->json(['msg' => 'You cannot clock in before/after working hours.'], 403);
-         }
 
         $attendance = Attendance::create([
             'date' => new \DateTime(),
@@ -53,7 +49,7 @@ class AttendanceController extends Controller
         $canClockIn = false;
         $canClockOut = false;
 
-        if ($attendance->count() == 0 && $today->format('H') >= 8 && $today->format('H') <= 15) {
+        if ($attendance->count() == 0) {
             $canClockIn = true;
         }
 
