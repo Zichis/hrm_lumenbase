@@ -41,18 +41,48 @@ class AttendanceController extends Controller
         return response()->json(['msg' => 'Success', 'attendances' => Auth::user()->attendance]);
     }
 
+    public function clockOut()
+    {
+        $today = new \DateTime();
+        $currentDate = $today->format('Y-m-d');
+        $attendance = Auth::user()->attendance()->where([
+            ['date', "=", $currentDate],
+            ['clock_in', "!=", null]
+        ])->first();
+
+        if (is_null($attendance)) {
+            return response()->json(['msg' => 'Make sure you have clocked in!'], 403);
+        }
+
+        $attendance->update([
+            'clock_out' => new \DateTime()
+        ]);
+
+        return response()->json(['msg' => 'Success', 'attendances' => Auth::user()->attendance]);
+    }
+
     public function status()
     {
         $today = new \DateTime();
         $currentDate = $today->format('Y-m-d');
-        $attendance = Auth::user()->attendance()->where('date', $currentDate)->get();
+        $attendance = Auth::user()->attendance()->where('date', $currentDate)->first();
         $canClockIn = false;
         $canClockOut = false;
 
-        if ($attendance->count() == 0) {
+        if (is_null($attendance)) {
             $canClockIn = true;
         }
 
-        return response()->json(['msg' => 'Success', 'canClockIn' => $canClockIn]);
+        $attendance = Auth::user()->attendance()->where([
+            ['date', "=", $currentDate],
+            ['clock_in', "!=", null],
+            ['clock_out', "=", null]
+        ])->first();
+
+        if (!is_null($attendance)) {
+            $canClockOut = true;
+        }
+
+        return response()->json(['msg' => 'Success', 'canClockIn' => $canClockIn, 'canClockOut' => $canClockOut]);
     }
 }
