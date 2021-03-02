@@ -29,7 +29,7 @@ $router->group(
 
 $router->get('attendance', 'Admin\AttendanceController@index');
 $router->get('attendance/clock-in', 'AttendanceController@clockIn');
-$router->get('attendance/{id}/clock-out', 'AttendanceController@clockOut');
+$router->get('attendance/clock-out', 'AttendanceController@clockOut');
 $router->get('attendance/status', 'AttendanceController@status');
 
 $router->get(
