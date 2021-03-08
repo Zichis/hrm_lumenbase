@@ -5,17 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use App\Models\Attendance;
 use App\Http\Controllers\Controller;
+use App\Repository\UserRepository;
 
 class AttendanceController extends Controller
 {
+    private $userRepository;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserRepository $userRepository)
     {
-        //
+        $this->userRepository = $userRepository;
     }
 
     public function index()
@@ -27,13 +30,6 @@ class AttendanceController extends Controller
 
     public function clockIn()
     {
-        /*$user = User::find(1);
-        $attendance = Attendance::create([
-            'date' => new \DateTime(),
-            'clock_in' => new \DateTime()
-        ]);
-        $user->attendance()->attach($attendance->id);
-
-        return response()->json(['message' => 'User clocked in']);*/
+        //
     }
 }
