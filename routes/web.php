@@ -34,6 +34,9 @@ $router->group(['middleware' => ['auth']], function () use ($router) {
     $router->get('attendance/status', 'AttendanceController@status');
 });
 
+// TODO: Move route to admin group
+$router->get('admin/departments', 'Admin\DepartmentController@index');
+
 $router->get(
     'profile', [
     'middleware' => 'auth',
