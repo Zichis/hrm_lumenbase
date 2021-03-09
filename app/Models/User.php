@@ -21,7 +21,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'email','password'
+        'email','password','department_id'
     ];
 
     /**
@@ -37,6 +37,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function personal()
     {
         return $this->hasOne('App\Models\Personal');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
     }
 
     public function name()

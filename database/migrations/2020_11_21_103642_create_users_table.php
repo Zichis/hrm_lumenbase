@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('email');
             $table->string('password');
+            $table->unsignedInteger('department_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
