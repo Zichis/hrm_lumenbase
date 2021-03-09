@@ -20,7 +20,8 @@ class UserSeeder extends Seeder
         // User 1
         $user1 = User::create([
             'email' => 'ezichiofficial@gmail.com',
-            'password' => Hash::make('password')
+            'password' => Hash::make('password'),
+            'department_id' => 1
         ]);
 
         $profile1 = Personal::create([
@@ -36,7 +37,8 @@ class UserSeeder extends Seeder
         // User 2
         $user2 = User::create([
             'email' => 'janedoe@gmail.com',
-            'password' => Hash::make('password')
+            'password' => Hash::make('password'),
+            'department_id' => 2
         ]);
 
         $profile1 = Personal::create([
