@@ -27,10 +27,12 @@ $router->group(
     }
 );
 
-$router->get('attendance', 'Admin\AttendanceController@index');
-$router->get('attendance/clock-in', 'AttendanceController@clockIn');
-$router->get('attendance/clock-out', 'AttendanceController@clockOut');
-$router->get('attendance/status', 'AttendanceController@status');
+$router->group(['middleware' => ['auth']], function () use ($router) {
+    $router->get('attendance', 'AttendanceController@index');
+    $router->get('attendance/clock-in', 'AttendanceController@clockIn');
+    $router->get('attendance/clock-out', 'AttendanceController@clockOut');
+    $router->get('attendance/status', 'AttendanceController@status');
+});
 
 $router->get(
     'profile', [
