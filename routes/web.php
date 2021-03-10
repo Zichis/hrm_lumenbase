@@ -36,6 +36,7 @@ $router->group(['middleware' => ['auth']], function () use ($router) {
 
 // TODO: Move route to admin group
 $router->get('admin/departments', 'Admin\DepartmentController@index');
+$router->post('admin/departments', 'Admin\DepartmentController@create');
 
 $router->get(
     'profile', [
