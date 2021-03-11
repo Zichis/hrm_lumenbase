@@ -34,4 +34,12 @@ class DepartmentController extends Controller
 
         return response()->json($output, $code);
     }
+
+    public function show($id)
+    {
+        $department = Department::with('users.personal')->where('id',$id)->first();
+        $data = ["department" => $department];
+
+        return response()->json($data, 200);
+    }
 }
