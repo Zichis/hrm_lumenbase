@@ -38,6 +38,7 @@ $router->group(['middleware' => ['auth']], function () use ($router) {
 $router->get('admin/departments', 'Admin\DepartmentController@index');
 $router->post('admin/departments', 'Admin\DepartmentController@create');
 $router->get('admin/departments/{id}', 'Admin\DepartmentController@show');
+$router->put('admin/departments/{id}', 'Admin\DepartmentController@update');
 
 $router->get(
     'profile', [
