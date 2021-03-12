@@ -42,4 +42,19 @@ class DepartmentController extends Controller
 
         return response()->json($data, 200);
     }
+
+    public function update(Request $request, $id)
+    {
+        $filteredRequest = array_filter($request->all());
+
+        $user = Department::find($id)->update($filteredRequest);
+
+        $code = 200;
+        $output = [
+            'code' => $code,
+            'message' => 'Department updated!',
+        ];
+
+        return response()->json($output, $code);
+    }
 }
