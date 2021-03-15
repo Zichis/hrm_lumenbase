@@ -78,8 +78,8 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::findOrFail($id);
-        $user = $this->userRepository->userWithPersonal($user->id);
+        $user = User::with(['personal'])->findOrFail($id);
+        //$user = $this->userRepository->userWithPersonal($user->id);
 
         return response()->json($user);
     }
