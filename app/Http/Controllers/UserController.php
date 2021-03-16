@@ -78,7 +78,7 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::with(['personal'])->findOrFail($id);
+        $user = User::with(['personal','roles'])->findOrFail($id);
         //$user = $this->userRepository->userWithPersonal($user->id);
 
         return response()->json($user);
@@ -88,7 +88,22 @@ class UserController extends Controller
     {
         $filteredRequest = array_filter($request->all());
 
-        $user = Personal::where('user_id', $id)->update($filteredRequest);
+        $personal = Personal::where('user_id', $id)->update([
+            'first_name' => $filteredRequest['first_name'],
+            'last_name' => $filteredRequest['last_name']
+        ]);
+
+        $user = User::find($id);
+        $user->update([
+            'department_id' => $filteredRequest['department_id']
+        ]);
+        $user->roles()->sync([2]);
+
+        $admin = filter_var($request->input('admin'), FILTER_VALIDATE_BOOLEAN);
+
+        if ($admin) {
+            $user->roles()->sync([1,2]);
+        }
 
         $code = 200;
         $output = [
