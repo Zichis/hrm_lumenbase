@@ -57,4 +57,17 @@ class DepartmentController extends Controller
 
         return response()->json($output, $code);
     }
+
+    public function destroy($id)
+    {
+        $department = Department::findOrFail($id);
+        $department->forceDelete();
+
+        $code = 200;
+        $output = [
+            'message' => 'Department deleted!',
+        ];
+
+        return response()->json($output, $code);
+    }
 }
