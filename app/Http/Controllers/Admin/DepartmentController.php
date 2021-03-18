@@ -62,10 +62,14 @@ class DepartmentController extends Controller
     {
         $department = Department::findOrFail($id);
         $department->forceDelete();
+        $departments = Department::with(['users'])->get();
 
         $code = 200;
         $output = [
             'message' => 'Department deleted!',
+            'data' => array(
+                'departments' => $departments
+            ),
         ];
 
         return response()->json($output, $code);
