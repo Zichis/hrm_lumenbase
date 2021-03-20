@@ -140,22 +140,15 @@ class UserController extends Controller
     public function current()
     {
         $userLogged = Auth::user();
-        $user = $this->userRepository->userWithPersonal($userLogged->id);
+        $user = User::with(['personal'])->find($userLogged->id);
 
         $code = 200;
         $output = $this->userService->responseMessage(
             'Current user!',
             array(
-            'user' => $user
+                'user' => $user
             )
         );
-        /*$output = [
-            'code' => $code,
-            'message' => 'Current user!',
-            'data' => array(
-              'user' => $user
-            ),
-        ];*/
 
         return response()->json($output, $code);
     }
