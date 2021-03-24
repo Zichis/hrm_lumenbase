@@ -34,12 +34,13 @@ class UserController extends Controller
     public function create(Request $request)
     {
         $validated = $this->validate(
-            $request, [
-            'email' => 'required|email|unique:users',
-            'password' => 'required',
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'department_id' => 'required|integer'
+            $request,
+            [
+                'email' => 'required|email|unique:users',
+                'password' => 'required',
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'department_id' => 'required|integer'
             ]
         );
 
@@ -166,11 +167,12 @@ class UserController extends Controller
         }
 
         $validated = $this->validate(
-            $request, [
-            'email' => 'required|email|unique:users',
-            'password' => 'required',
-            'first_name' => 'required',
-            'last_name' => 'required'
+            $request,
+            [
+                'email' => 'required|email|unique:users',
+                'password' => 'required',
+                'first_name' => 'required',
+                'last_name' => 'required'
             ]
         );
 
