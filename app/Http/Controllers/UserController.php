@@ -135,7 +135,7 @@ class UserController extends Controller
         $user->save();
         $user->delete();
 
-        $users = $this->userRepository->usersWithPersonal();
+        $users = User::with(['personal', 'roles'])->where('users.deleted_at', null)->get();
 
         $code = 200;
         $output = [
