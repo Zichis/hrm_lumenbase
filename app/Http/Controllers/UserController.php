@@ -87,6 +87,7 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
+        // TODO: Reduce/Refactor this controller
         $filteredRequest = array_filter($request->all());
 
         $personal = Personal::where('user_id', $id)->update([
@@ -94,16 +95,26 @@ class UserController extends Controller
             'last_name' => $filteredRequest['last_name']
         ]);
 
+        $adminUsers = User::whereHas(
+            'roles', function($q){
+                $q->where('name', 'ROLE_ADMIN');
+            }
+        )->count();
+
         $user = User::find($id);
         $user->update([
             'department_id' => $filteredRequest['department_id']
         ]);
-        $user->roles()->sync([2]);
+        $user->roles()->sync([1,2]);
 
         $admin = filter_var($request->input('admin'), FILTER_VALIDATE_BOOLEAN);
 
-        if ($admin) {
-            $user->roles()->sync([1,2]);
+        if ($adminUsers == 1 && !$admin) {
+            return response()->json(['message' => 'There should be an admin user!'], 401);
+        }
+
+        if (!$admin) {
+            $user->roles()->sync([2]);
         }
 
         $code = 200;
