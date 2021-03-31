@@ -220,7 +220,7 @@ class UserController extends Controller
             'code' => $code,
             'message' => 'Number of users',
             'data' => array(
-              'users' => count($this->userRepository->usersWithPersonal())
+              'users' => count($this->userRepository->getusers())
             ),
         ];
 
